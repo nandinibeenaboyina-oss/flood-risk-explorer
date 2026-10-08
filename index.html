@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4f5f0" />
+  <meta name="description" content="Explore India's historical flood event inventory." />
+  <title>Floodline | Historical risk explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Floodline home"><span class="brand-mark"><i></i><i></i><i></i></span><span>floodline<span class="brand-period">.</span></span></a>
+      <div class="nav-caption">WORKSPACE</div>
+      <nav aria-label="Main navigation">
+        <a class="nav-link active" href="#overview"><span class="nav-icon grid-icon"></span>Overview</a>
+        <a class="nav-link" href="#footprint"><span class="nav-icon pin-icon"></span>Event footprint</a>
+        <a class="nav-link" href="#records"><span class="nav-icon list-icon"></span>Inventory records</a>
+      </nav>
+      <div class="nav-separator"></div>
+      <div class="nav-caption">RESEARCH</div>
+      <a class="nav-link" href="#method"><span class="nav-icon pulse-icon">⌁</span>Method notes</a>
+      <div class="sidebar-bottom"><div class="source-chip"><span class="source-dot"></span><div><strong>Historical inventory</strong><small>Local analysis only</small></div></div><div class="version">FLOOD RISK EXPLORER <span>·</span> 0.1</div></div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar"><div class="breadcrumbs"><span>Research workspace</span><b>/</b><strong>Flood inventory</strong></div><div class="topbar-right"><span class="mode-tag"><i></i>HISTORICAL MODE</span><span class="avatar">BN</span></div></header>
+      <section class="page-heading"><div><div class="eyebrow"><i></i>INDIA · FLOOD EVENT INVENTORY</div><h1>Flood risk, in context.</h1><p class="intro">Explore historical event patterns across duration, impact, location and recorded severity.</p></div><div class="heading-actions"><button id="templateButton" class="button secondary"><span>↓</span>CSV template</button><button id="importButton" class="button primary"><span>↑</span>Import dataset</button><input id="fileInput" type="file" accept=".csv,text/csv" hidden /></div></section>
+      <div class="data-notice" role="status"><span class="notice-icon">i</span><span id="dataNotice">Preview excerpt from the uploaded screenshot. Import the original CSV to analyze the complete dataset.</span><small>FILES STAY ON THIS DEVICE</small></div>
+
+      <section class="metric-grid" aria-label="Dataset summary">
+        <article class="metric-card"><div class="metric-top">EVENT RECORDS <span>↗</span></div><strong id="metricEvents">—</strong><small id="eventFoot">Records in current view</small></article>
+        <article class="metric-card"><div class="metric-top">SEVERITY CLASSES <span class="orange">◈</span></div><strong id="metricClasses">—</strong><small>Labels retained as provided</small></article>
+        <article class="metric-card"><div class="metric-top">COORDINATES PRESENT <span class="green">◎</span></div><strong id="metricCoords">—</strong><small id="coordsFoot">Latitude and longitude</small></article>
+        <article class="metric-card impact-card"><div class="metric-top">PEOPLE DISPLACED <span class="blue">⌁</span></div><strong id="metricDisplaced">—</strong><small>Sum of reported values</small></article>
+      </section>
+
+      <section class="visual-grid">
+        <article id="footprint" class="panel footprint-panel"><div class="panel-heading"><div><div class="section-kicker">SPATIAL DISTRIBUTION</div><h2>Event footprint</h2></div><span class="panel-meta"><i></i>Coordinates from inventory</span></div><div class="plot-wrap"><canvas id="plot" aria-label="Scatter plot of flood event coordinates by severity class"></canvas><div id="plotEmpty" hidden>No coordinate pairs in the current dataset.</div></div><div class="axis-caption"><span>WEST ← LONGITUDE → EAST</span><span>NORTH ↑ LATITUDE ↓ SOUTH</span></div><div id="legend" class="legend"></div></article>
+        <article class="panel causes-panel"><div class="panel-heading"><div><div class="section-kicker">RECORDED TRIGGERS</div><h2>Main causes</h2></div><span id="causeTypes" class="type-count">— TYPES</span></div><div id="causeList" class="cause-list"></div><div class="panel-note"><i></i>Counts reflect selected records; source labels are not reclassified.</div></article>
+      </section>
+
+      <section class="analysis-grid">
+        <article class="panel severity-panel"><div class="panel-heading"><div><div class="section-kicker">SOURCE LABELS</div><h2>Severity mix</h2></div><span class="neutral-badge">AS REPORTED</span></div><div id="severityList" class="severity-list"></div></article>
+        <article id="method" class="panel model-panel"><div class="panel-heading"><div><div class="section-kicker">RESEARCH CONTEXT</div><h2>Model readiness</h2></div><span class="status-pill"><i></i>NOT CONNECTED</span></div><p class="model-copy">This workspace summarizes the inventory; it does not make a flood forecast or issue warnings.</p><div class="model-rule"></div><div class="model-row"><span>Paper proposes</span><strong>Random Forest · XGBoost · LSTM</strong></div><div class="model-row"><span>Model artifact</span><strong class="muted">Not provided</strong></div><div class="model-row"><span>Live sensor feed</span><strong class="muted">Not connected</strong></div></article>
+      </section>
+
+      <section id="records" class="panel records-panel"><div class="records-heading"><div><div class="section-kicker">HISTORICAL DATA</div><h2>Inventory records <span id="recordCount">—</span></h2></div><div class="table-actions"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Search records" aria-label="Search records" /></label><select id="severityFilter" aria-label="Filter by severity"><option value="">All classes</option></select><button id="exportButton" class="icon-button" title="Export current records as CSV" aria-label="Export current records as CSV">↓</button></div></div><div class="table-scroll"><table><thead><tr><th>CAUSE</th><th>STATE</th><th>DURATION</th><th>AREA AFFECTED</th><th>PEOPLE DISPLACED</th><th>SEVERITY</th></tr></thead><tbody id="recordsBody"></tbody></table></div><div class="table-footer"><span id="tableShowing">—</span><span>Values shown without reinterpretation.</span></div></section>
+      <footer class="page-footer"><span>FLOODLINE <i>·</i> RESEARCH PROTOTYPE</span><span>Historical data is not an operational warning service.</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
