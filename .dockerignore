@@ -2,3 +2,8 @@
 .github
 node_modules
 *.log
+.venv
+__pycache__
+.data
+data
+frontend/dist
